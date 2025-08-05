@@ -2,6 +2,7 @@ package com.cliente.ws.valmerdev.controller;
 
 import com.cliente.ws.valmerdev.model.SubscriptionType;
 import com.cliente.ws.valmerdev.repository.SubscriptionTypeRepository;
+import com.cliente.ws.valmerdev.service.SubscriptionTypeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,15 +16,15 @@ import java.util.List;
 public class SubscriptionTypeController {
 
 
-    private SubscriptionTypeRepository subscriptionTypeRepository;
+    private final SubscriptionTypeService subscriptionTypeService;
 
-    SubscriptionTypeController(SubscriptionTypeRepository subscriptionTypeRepository){
-        this.subscriptionTypeRepository = subscriptionTypeRepository;
+    SubscriptionTypeController(SubscriptionTypeService subscriptionTypeService){
+        this.subscriptionTypeService = subscriptionTypeService;
     }
 
     @GetMapping
     public ResponseEntity<List<SubscriptionType>> findAll(){
 
-        return ResponseEntity.status(HttpStatus.OK).body(subscriptionTypeRepository.findAll());
+        return ResponseEntity.status(HttpStatus.OK).body(subscriptionTypeService.findAll());
     }
 }
