@@ -1,11 +1,13 @@
 package com.cliente.ws.valmerdev.service.impl;
 
+import com.cliente.ws.valmerdev.exception.NotFoundException;
 import com.cliente.ws.valmerdev.model.SubscriptionType;
 import com.cliente.ws.valmerdev.repository.SubscriptionTypeRepository;
 import com.cliente.ws.valmerdev.service.SubscriptionTypeService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
@@ -23,8 +25,14 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
 
     @Override
     public SubscriptionType findById(Long id) {
-        return null;
+        Optional<SubscriptionType> optionalSubscriptionType
+                = subscriptionTypeRepository.findById(id);
+        if(optionalSubscriptionType.isEmpty()) {
+            throw new NotFoundException("SubscriptionType not found!");
+        }
+        return optionalSubscriptionType.get();
     }
+
 
     @Override
     public SubscriptionType create(SubscriptionType subscriptionType) {
