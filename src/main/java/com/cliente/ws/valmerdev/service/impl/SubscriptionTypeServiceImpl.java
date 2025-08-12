@@ -1,5 +1,6 @@
 package com.cliente.ws.valmerdev.service.impl;
 
+import com.cliente.ws.valmerdev.dto.SubscriptionTypeDto;
 import com.cliente.ws.valmerdev.exception.NotFoundException;
 import com.cliente.ws.valmerdev.model.SubscriptionType;
 import com.cliente.ws.valmerdev.repository.SubscriptionTypeRepository;
@@ -35,8 +36,14 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
 
 
     @Override
-    public SubscriptionType create(SubscriptionType subscriptionType) {
-        return null;
+    public SubscriptionType create(SubscriptionTypeDto dto) {
+        return subscriptionTypeRepository.save(SubscriptionType.builder()
+                        .id(dto.getId())
+                        .name(dto.getName())
+                        .accessMonth(dto.getAccessMonth())
+                        .price(dto.getPrice())
+                        .productkey(dto.getProductkey())
+                .build());
     }
 
     @Override
