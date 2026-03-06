@@ -32,7 +32,7 @@ class WsRaspayIntegrationImplTest {
     @Test
     void createCustomerWhenDtoOk() {
         CustomerDto dto = new CustomerDto(
-                null,
+                "6994f8fe4e639de69ac9103a",
                 "01150170204",
                 "teste@teste",
                 "Harlan",
@@ -40,7 +40,7 @@ class WsRaspayIntegrationImplTest {
         );
 
         ResponseEntity<CustomerDto> response =
-                ResponseEntity.ok(dto);
+                ResponseEntity.status(HttpStatus.CREATED).body(dto);
 
         Mockito.when(restTemplate.exchange(
                 Mockito.anyString(),
@@ -60,9 +60,9 @@ class WsRaspayIntegrationImplTest {
         // request (o que você envia pro gateway)
         OrderDto requestDto = new OrderDto(
                 null,
-                "6983bbc6bf7d75f246a010b7",   // customerId (ou o id real do customer)
+                "6994f8fe4e639de69ac9103a",   // customerId (ou o id real do customer)
                 BigDecimal.ZERO,
-                "PERPETUAL22"                  // productAcronym
+                "PROD_PREM"                  // productAcronym
         );
 
         // response (o que o gateway devolve: id gerado + 201)
@@ -88,9 +88,9 @@ class WsRaspayIntegrationImplTest {
         Assertions.assertNotNull(result);
         Assertions.assertNotNull(result.getId());
         Assertions.assertEquals("6983bbc6bf7d75f246a09999", result.getId());
-        Assertions.assertEquals("6983bbc6bf7d75f246a010b7", result.getCustomerId());
+        Assertions.assertEquals("6994f8fe4e639de69ac9103a", result.getCustomerId());
         Assertions.assertEquals(0, BigDecimal.ZERO.compareTo(result.getDiscount()));
-        Assertions.assertEquals("PERPETUAL22", result.getProductAcronym());
+        Assertions.assertEquals("PROD_PREM", result.getProductAcronym());
     }
 
     @Test
@@ -105,7 +105,7 @@ class WsRaspayIntegrationImplTest {
         );
         PaymentDto paymentDto = new PaymentDto(
                 creditCardDto,
-                "6983bbc6bf7d75f246a010b7",
+                "6994f8fe4e639de69ac9103a",
                 "6983bbc6bf7d75f246a09999"
         );
 
